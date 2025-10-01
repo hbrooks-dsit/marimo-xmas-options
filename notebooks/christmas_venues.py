@@ -16,7 +16,7 @@ def _(mo):
         """
     # 🎄 Christmas Venue Options Around Manchester 🎄
 
-    Help us choose the perfect venue for our Christmas celebration!!
+    Help us choose the perfect venue for our Christmas celebration!
     """
     )
     return
@@ -28,7 +28,7 @@ def _(mo):
     # Note: When downloading as HTML, make sure to copy the 'data' folder 
     # to the same location as the HTML file for audio to work
     try:
-        audio_widget = mo.audio("./data/christmas-wrapping.mp3")
+        audio_widget = mo.audio("public/christmas-wrapping.mp3")
     except Exception:
         # Fallback if audio file is not found
         audio_widget = mo.md("🎵 *Audio file not available")
@@ -59,7 +59,7 @@ def _():
             "description": "Contemporary restaurant with seasonal British cuisine and festive atmosphere",
             "features": ["Christmas menu", "Modern British cuisine", "Central location", "Seasonal ingredients"],
             "price": "2 Courses: £34, 3 Courses: £39",
-            "menu_images": ["data/t&d-menu-1.jpg", "data/t&d-menu-2.jpg"],
+            "menu_images": ["public/t&d-menu-1.jpg", "public/t&d-menu-2.jpg"],
             "vegan_menu_image": ""
         },
         {
