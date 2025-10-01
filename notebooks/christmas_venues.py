@@ -16,7 +16,7 @@ def _(mo):
         """
     # 🎄 Christmas Venue Options Around Manchester 🎄
 
-    Help us choose the perfect venue for our Christmas celebration!
+    Help us choose the perfect venue for our Christmas celebration!!
     """
     )
     return
