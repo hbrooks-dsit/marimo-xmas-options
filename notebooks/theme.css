@@ -1,0 +1,107 @@
+/* Load Merriweather and Fira Code from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@300..900&family=Fira+Code:wght@300..700&display=swap");
+
+/* Font and Radius Variables */
+:root {
+    --monospace-font: "Fira Code", monospace; /* Clean coding font */
+    --text-font: "Merriweather", serif; /* Soft serif for warmth and comfort */
+    --heading-font: "Merriweather", serif; /* Consistent with text font */
+    --radius: 12px; /* Slightly softer corners for a gentler feel */
+}
+
+/* Updated Christmas Theme Colors with Lighter Greens and Snow Effect */
+:root {
+    /* Backgrounds and Foregrounds */
+    --background: light-dark(
+        #a8d5ba,
+        #c8e6c9
+    ); /* Lighter festive green gradient */
+    --background-darker: light-dark(
+        #91c9a8,
+        #b2dfbb
+    ); /* Slightly darker light green */
+    --foreground: light-dark(#ffffff, #f1f8f6); /* Bright white foreground */
+    --muted: #dcedc8; /* Very soft green for muted elements */
+    --muted-foreground: light-dark(
+        #c5e1a5,
+        #e8f5e9
+    ); /* Muted green foreground */
+
+    /* UI Elements */
+    --card: light-dark(
+        #f1f8f6,
+        #e8f5e9
+    ); /* Very light green for cards */
+    --card-foreground: light-dark(
+        #558b2f,
+        #81c784
+    ); /* Foreground colors for cards */
+    --popover: light-dark(#e8f5e9, #c8e6c9); /* Same as card */
+    --popover-foreground: light-dark(
+        #558b2f,
+        #81c784
+    ); /* Same as card-foreground */
+    --border: light-dark(#aed581, #7cb342); /* Subtle green borders */
+    --input: light-dark(
+        #c5e1a5,
+        #a5d6a7
+    ); /* Input fields with green tones */
+
+    /* Primary Colors */
+    --primary: #d32f2f; /* Christmas red */
+    --primary-foreground: #ffffff; /* White for contrast */
+    --secondary: #ffccbc; /* Warm peach */
+    --secondary-foreground: #b71c1c; /* Deep red for contrast */
+    --accent: #ffab91; /* Soft orange-red */
+    --accent-foreground: light-dark(
+        #1c1e1e,
+        #e0f0f0
+    ); /* Dimmed accent foreground */
+
+    /* Semantic Colors */
+    --error: #ff6b81; /* Soft rose red */
+    --success: #6bb893; /* Muted green */
+    --destructive: #e15a5a; /* Softer red for destructive actions */
+    --action: #4a7c94; /* Muted blue for actions */
+    --link: #d32f2f; /* Christmas red for links */
+    --link-visited: #b71c1c; /* Darker red for visited links */
+
+    /* Shadows */
+    --base-shadow: light-dark(
+        hsla(120, 40%, 40%, 10%),
+        hsla(120, 45%, 30%, 20%)
+    ); /* Subtle green shadows */
+
+    --base-shadow-darker: light-dark(
+        hsla(120, 40%, 40%, 20%),
+        hsla(120, 45%, 30%, 30%)
+    ); /* Slightly darker shadows */
+
+    --base-shadow-opacity: 10%; /* Slightly deeper shadow depth */
+}
+
+/* Snow Effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: snow 10s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes snow {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}

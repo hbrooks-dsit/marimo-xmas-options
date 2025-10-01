@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.16.2"
-app = marimo.App(width="medium", css_file="./christmas-theme.css")
+app = marimo.App(width="medium", css_file="theme.css")
 
 
 @app.cell
@@ -51,7 +51,8 @@ def _():
             "features": ["Private dining area", "Christmas menu", "Historic setting", "Good transport links"],
             "price": "2 Courses: £38, 3 Courses: £45",
             "menu_image": "https://theblackfriarsalford.co.uk/wp-content/uploads/2025/08/FESTIVE-MENU-2025.png",
-            "vegan_menu_image": "https://theblackfriarsalford.co.uk/wp-content/uploads/2025/09/2.png"
+            "vegan_menu_image": "https://theblackfriarsalford.co.uk/wp-content/uploads/2025/09/2.png",
+            "web_link": "https://theblackfriarsalford.co.uk"
         },
         {
             "name": "Tariff and Dale",
@@ -60,16 +61,18 @@ def _():
             "features": ["Christmas menu", "Modern British cuisine", "Central location", "Seasonal ingredients"],
             "price": "2 Courses: £34, 3 Courses: £39",
             "menu_images": ["public/t&d-menu-1.jpg", "public/t&d-menu-2.jpg"],
-            "vegan_menu_image": ""
+            "vegan_menu_image": "",
+            "web_link": "https://www.tariffanddale.com"
         },
         {
             "name": "Trof NQ",
             "location": "Manchester, Northern Quarter",
             "description": "Three-floor venue with exposed brick, cosy booths, and renowned for the best roast dinners in Manchester",
             "features": ["Private hire options", "Festive set course menu", "Buffet options", "Multiple floors", "Cosy booths", "Private bar", "Third story lounge"],
-            "price": "Set Course: 2 Courses £30, 3 Courses £35 | Buffet: £28pp (18+ people)",
-            "menu_images": ["https://trofnq.co.uk/wp-content/uploads/2025/09/CHRISTMAS-MENU-FOOD-1-scaled.png"],
-            "vegan_menu_image": ""
+            "price": "Set Course: 2 Courses £30, 3 Courses £35",
+            "menu_image": "https://trofnq.co.uk/wp-content/uploads/2025/09/CHRISTMAS-MENU-FOOD-1-scaled.png",
+            "vegan_menu_image": "",
+            "web_link": "https://trofnq.co.uk"
         }
     ]
     return (venues,)
@@ -92,6 +95,8 @@ def _(mo, venues):
 
     🎯 **Features:**
     {features_list}
+
+    🔗 [Visit Website]({venue['web_link']})
     ---
     """
 
@@ -130,6 +135,14 @@ def _(mo, venues):
         venue_cards.append(venue_card)
 
     mo.vstack(venue_cards)
+    return
+
+
+@app.cell
+def _(mo):
+    # Add a Microsoft Form link at the end
+    form_link = "https://forms.office.com/e/gxCimqmuD6"
+    mo.md(f"## Feedback Form\nPlease provide your preference using [this form]({form_link}).")
     return
 
 

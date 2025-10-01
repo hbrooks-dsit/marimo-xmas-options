@@ -29,7 +29,7 @@ import fire
 
 from loguru import logger
 
-def _export_html_wasm(notebook_path: Path, output_dir: Path, as_app: bool = False) -> bool:
+def _export_html_wasm(notebook_path: Path, output_dir: Path, as_app: bool = True) -> bool:
     """Export a single marimo notebook to HTML/WebAssembly format.
 
     This function takes a marimo notebook (.py file) and exports it to HTML/WebAssembly format.
@@ -207,7 +207,7 @@ def main(
     logger.info(f"Using template file: {template_file}")
 
     # Export notebooks from the notebooks/ directory
-    notebooks_data = _export(Path("notebooks"), output_dir, as_app=False)
+    notebooks_data = _export(Path("notebooks"), output_dir, as_app=True)  # Ensure app mode is enabled
 
     # Export apps from the apps/ directory
     apps_data = _export(Path("apps"), output_dir, as_app=True)
