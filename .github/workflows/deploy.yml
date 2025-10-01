@@ -15,16 +15,29 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # ... checkout and install dependencies
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: Create and Activate Virtual Environment
+        run: |
+          python3 -m venv venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
 
       - name: 📄 Export notebook
         run: |
+          source venv/bin/activate
           marimo export html-wasm notebooks/christmas_venues.py -o ./ --mode run
 
       - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: path/to/output
+          path: ./  # Adjust the path to match your output directory
 
       - name: 🌐 Deploy to GitHub Pages
         id: deployment
