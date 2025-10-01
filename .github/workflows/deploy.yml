@@ -1,33 +1,70 @@
+# This workflow builds and deploys marimo notebooks to GitHub Pages
+# It runs automatically when changes are pushed to the main branch or can be triggered manually
+
 name: Deploy to GitHub Pages
 
+# Defines when the workflow will run
 on:
   push:
-    branches:
-      - main
+    branches: ['main']  # Trigger on pushes to main branch
+  workflow_dispatch:    # Allow manual triggering from the GitHub UI
+
+# Concurrency settings to manage multiple workflow runs
+concurrency:
+  group: 'pages'             # Only one workflow in the 'pages' group can run at a time
+  cancel-in-progress: false  # Don't cancel in-progress runs when a new one is triggered
+
+# Environment variables used by the workflow
+env:
+  POETRY_VIRTUALENVS_IN_PROJECT: true  # Use .venv directory for virtual environments
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # The build job exports marimo notebooks to static HTML/WebAssembly
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
     steps:
-      # ... checkout and install dependencies
+      # Check out the repository code
+      - uses: actions/checkout@v4
 
-      - name: 📄 Export notebook
+      # Install Poetry
+      - name: Install Poetry
         run: |
-          marimo export html-wasm notebooks/christmas_venues.py -o ./ --mode run
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "export PATH=$HOME/.local/bin:$PATH" >> $GITHUB_ENV
 
-      - name: 📦 Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+      # Install dependencies using Poetry
+      - name: Install Dependencies
+        run: poetry install
+
+      # Run the build script to export notebooks to WebAssembly
+      - name: 🛠️ Export notebooks
+        run: poetry run python .github/scripts/build.py --output-dir _site
+
+      # Upload the generated site as an artifact for the deploy job
+      - name: 📤 Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: path/to/output
+          path: _site  # Directory containing the built site
 
-      - name: 🌐 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # The deploy job publishes the built site to GitHub Pages
+  deploy:
+    needs: build  # This job depends on the build job completing successfully
+
+    # Required permissions for the GitHub Pages deployment
+    permissions:
+      pages: write      # Permission to deploy to Pages
+      id-token: write   # Permission to verify the deployment
+
+    # Configure the deployment environment
+    environment:
+      name: github-pages                             # Deploy to the github-pages environment
+      url: ${{ steps.deployment.outputs.page_url }}  # Use the URL from the deployment step
+
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    steps:
+      # Deploy the site to GitHub Pages using the official action
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment                 # ID used to reference this step's outputs
+        uses: actions/deploy-pages@v4  # GitHub's official Pages deployment action
         with:
           artifact_name: github-pages
